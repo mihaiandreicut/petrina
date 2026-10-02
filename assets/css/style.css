@@ -451,6 +451,7 @@ main { overflow-x: clip; }
 .nav-list a:not(.btn) {
   position: relative;
   display: block;
+  white-space: nowrap;
   padding: 0.5rem 0.85rem;
   color: var(--ink-soft);
   font-size: 0.95rem;
@@ -472,6 +473,7 @@ main { overflow-x: clip; }
   background: var(--clay-500);
 }
 .nav-cta { margin-left: 0.75rem; }
+.nav-cta .btn { white-space: nowrap; }
 
 .nav-toggle {
   display: none;
@@ -491,7 +493,7 @@ main { overflow-x: clip; }
 .nav-toggle[aria-expanded="true"] .icon-open { display: none; }
 .nav-toggle[aria-expanded="true"] .icon-close { display: block; }
 
-@media (max-width: 1024px) {
+@media (max-width: 1180px) {
   .js .nav-toggle { display: inline-flex; }
   .js .nav-list {
     position: absolute;
@@ -1010,7 +1012,7 @@ html:not(.js) .slider-track { scrollbar-width: thin; }
 
 .values {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: 1.25rem;
 }
 .value {
@@ -1034,12 +1036,6 @@ html:not(.js) .slider-track { scrollbar-width: thin; }
 .value h3 { font-size: 1.3rem; margin-bottom: 0.6rem; }
 .value p { color: var(--ink-soft); font-size: 0.97rem; }
 
-@media (max-width: 1000px) {
-  .values { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 560px) {
-  .values { grid-template-columns: minmax(0, 1fr); }
-}
 
 /* ---------- Bandă de apel la acțiune ---------- */
 
@@ -1321,12 +1317,8 @@ html:has(dialog[open]) { overflow: hidden; }
   font-weight: 600;
 }
 .chip .icon { width: 1rem; height: 1rem; color: var(--sage-700); }
-.service-footer .extra {
-  flex-basis: 100%;
-  margin: 0.25rem 0 0;
-  color: var(--ink-soft);
-  font-size: 0.95rem;
-}
+.chip span { font-weight: 500; color: var(--ink-soft); }
+.chip strong { font-weight: 700; color: var(--ink); }
 .modal-body .notice { margin-top: 1.5rem; }
 .modal-actions {
   display: flex;
@@ -1425,17 +1417,11 @@ html:not(.js) .modal-close { display: none; }
   from { opacity: 0; transform: translateY(10px); }
 }
 .tab-panel .panel-title {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   font-size: var(--fs-h3);
 }
-.js .tab-panel .panel-title {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-}
+.tab-panel .muted + .credentials { margin-top: 1.5rem; }
+.about-more { margin-top: 2rem; }
 html:not(.js) .tabs-list { display: none; }
 @media (max-width: 480px) {
   .tabs-list { width: 100%; }
@@ -1568,6 +1554,13 @@ html:not(.js) .tabs-list { display: none; }
 }
 .address-row small { color: var(--ink-mute); font-size: 0.93rem; }
 .cabinet-text .hero-actions { margin-top: 1.75rem; }
+.cabinet-closing {
+  margin: 1.75rem 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.35rem);
+  font-style: italic;
+  color: var(--clay-700);
+}
 .section--surface .address-row { background: var(--bg); box-shadow: none; border: 1px solid var(--line); }
 
 /* Galerie foto cu puncte suprapuse */
@@ -1732,10 +1725,6 @@ a.contact-item:hover { color: var(--sage-700); }
   font-weight: 650;
   color: var(--ink);
 }
-.field .optional {
-  font-weight: 500;
-  color: var(--ink-mute);
-}
 .field input[type="text"],
 .field input[type="tel"],
 .field input[type="email"],
@@ -1771,69 +1760,6 @@ a.contact-item:hover { color: var(--sage-700); }
 .field.has-error textarea { border-color: #a33a2a; }
 .field.has-error .error { display: block; }
 
-fieldset.field {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  min-width: 0;
-}
-.choices {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 0.45rem;
-}
-.choice {
-  position: relative;
-  flex: 1 1 10rem;
-}
-.choice input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-.choice label {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  padding: 0.8rem 1rem;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-sm);
-  background: var(--bg);
-  font-weight: 600;
-  cursor: pointer;
-  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
-}
-.choice label .icon { color: var(--sage-700); }
-.choice label:hover { border-color: var(--ink-mute); }
-.choice input:checked + label {
-  border-color: var(--sage-700);
-  background: var(--sage-100);
-  box-shadow: inset 0 0 0 1px var(--sage-700);
-}
-.choice input:focus-visible + label {
-  outline: 2px solid var(--clay-500);
-  outline-offset: 3px;
-}
-
-.consent {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  font-size: 0.93rem;
-  font-weight: 500 !important;
-  line-height: 1.55;
-  color: var(--ink-soft) !important;
-  cursor: pointer;
-}
-.consent input {
-  flex: none;
-  width: 1.2rem;
-  height: 1.2rem;
-  margin: 0.15rem 0 0;
-  accent-color: var(--sage-700);
-}
-
 .hp-field {
   position: absolute !important;
   left: -9999px !important;
@@ -1848,6 +1774,13 @@ fieldset.field {
   align-items: center;
   gap: 1rem;
   margin-top: 1.75rem;
+}
+.form-privacy {
+  flex: 1 1 14rem;
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--ink-mute);
 }
 .form-status {
   margin-top: 1.25rem;

@@ -240,6 +240,22 @@
     select(tabs[0]);
   });
 
+  // Linkuri care deschid direct un anumit tab (ex. „Citește mai multe despre parcursul meu”)
+  document.addEventListener("click", function (e) {
+    var link = e.target.closest("[data-tab-open]");
+    if (!link) return;
+    var tab = document.getElementById(link.getAttribute("data-tab-open"));
+    if (!tab || tab.getAttribute("role") !== "tab") return;
+    e.preventDefault();
+    tab.click();
+    var list = tab.closest("[role='tablist']");
+    var top = list.getBoundingClientRect().top;
+    if (top < 0 || top > window.innerHeight * 0.6) {
+      list.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    }
+    tab.focus({ preventScroll: true });
+  });
+
   /* ---------- Anul curent în subsol ---------- */
   document.querySelectorAll("[data-year]").forEach(function (el) {
     el.textContent = String(new Date().getFullYear());
@@ -282,7 +298,7 @@
       e.preventDefault();
 
       var firstInvalid = null;
-      form.querySelectorAll("input[required], input[type='email'], textarea[required]").forEach(function (input) {
+      form.querySelectorAll("input[required], textarea[required]").forEach(function (input) {
         if (!validateField(input) && !firstInvalid) firstInvalid = input;
       });
       if (firstInvalid) {
@@ -305,8 +321,6 @@
         var lines = [
           "Nume: " + name,
           "Telefon: " + (data.get("telefon") || ""),
-          "E-mail: " + (data.get("email") || "-"),
-          "Preferință ședințe: " + (data.get("preferinta") || "-"),
           "",
           (data.get("mesaj") || "").toString()
         ];

@@ -10,13 +10,13 @@ Tot conținutul este în `index.html`, pe secțiuni. Meniul și punctele din dre
 | Secțiune | Ancoră | Ce conține |
 | --- | --- | --- |
 | Acasă | `#acasa` | titlul principal, fotografia, butonul de programare |
-| Despre mine | `#despre` | prezentare și taburi: Povestea mea, Metode, Parcurs profesional |
-| Servicii | `#servicii` | slider cu cele 7 servicii; „Află mai multe” deschide o fereastră cu detaliile |
-| Cum lucrez | `#abordare` | cele patru principii și apelul la programare |
+| Despre mine | `#despre` | prezentare și taburi: Povestea mea, Metode, Parcurs; butonul „Citește mai multe despre parcursul meu” deschide tabul Parcurs |
+| Servicii | `#servicii` | slider cu cele 7 servicii („Află mai multe” deschide o fereastră cu detaliile) și apelul la programare |
+| Ce vei găsi | `#abordare` | Confidențialitate și Empatie |
 | Cabinet | `#cabinet` | textul despre cabinet, adresa și un slider cu fotografii |
+| Resurse | `#resurse` | textul introductiv și grila de articole |
 | Întrebări | `#intrebari` | întrebări frecvente |
-| Contact | `#contact` | datele de contact și formularul |
-| Resurse | `#resurse` | ascunsă până la publicarea articolelor (vezi mai jos) |
+| Contact | `#contact` | datele de contact și formularul (nume, telefon, mesaj) |
 
 Alte fișiere: `confidentialitate.html` (Politica de confidențialitate, de completat) și `404.html`.
 
@@ -46,14 +46,11 @@ python3 -m http.server 8000
 Textele de completat sunt marcate pe site cu **fundal galben** (clasa `todo`). După completare,
 șterge și marcajul `<span class="todo" …>…</span>`, păstrând doar textul.
 
-- **Întrebări frecvente:** numele platformei online, dacă tariful online este același,
-  politica de anulare (numărul de ore și ce se întâmplă cu ședințele anulate târziu).
-- **Servicii → Intervenție în criză** (în fereastra de detalii): în câte zile oferi de regulă
-  o programare (`[X zile]`).
-- **Despre mine → Povestea mea:** ce ai făcut și ce ai învățat în cei aproape zece ani.
-- **Politica de confidențialitate** (`confidentialitate.html`): întreaga pagină, necesară pentru
-  formularul de contact. Ideal, textul final e verificat de un specialist în protecția datelor.
+- **Ce vei găsi în lucrul cu mine → Empatie:** o frază scurtă, ca la Confidențialitate.
 - **Resurse:** articolele (vezi mai jos).
+- **Politica de confidențialitate** (`confidentialitate.html`): întreaga pagină. Formularul trimite
+  date personale (nume, telefon), iar sub buton există un link către această pagină. Ideal, textul
+  final e verificat de un specialist în protecția datelor.
 
 ### Fotografii
 
@@ -84,14 +81,14 @@ Formularul este pregătit pentru [Formspree](https://formspree.io):
 Până la configurare, butonul „Trimite mesajul” deschide aplicația de e-mail a vizitatorului, cu
 mesajul deja completat. Formularul funcționează deci și acum.
 
-## Publicarea secțiunii Resurse
+## Articole în secțiunea Resurse
 
-Secțiunea există în `index.html`, dar are atributul `hidden`, deci nu se vede. Când ai 2–3 articole:
+Secțiunea afișează o grilă de carduri (imagine, titlu, primul paragraf). Momentan sunt trei carduri
+de completat. Pentru fiecare articol, completează un `<article class="article-card">` din `#resurse`
+(imaginea, titlul, primul paragraf și linkul către articol); pentru mai multe articole, copiază un card.
 
-1. Completează cardurile din secțiunea `#resurse` (titlu, primul paragraf, imagine, link).
-2. Șterge atributul `hidden` de pe `<section … id="resurse" … hidden>`.
-3. Adaugă „Resurse” în meniu, în subsol și în punctele laterale (`side-dots`), în `index.html`,
-   și în meniul/subsolul din `confidentialitate.html` și `404.html`.
+Dacă vrei să ascunzi secțiunea până ai articole, adaugă atributul `hidden` pe
+`<section class="section" id="resurse" …>` și scoate „Resurse” din meniu, subsol și punctele laterale.
 
 ## După publicarea pe un domeniu
 
