@@ -607,7 +607,7 @@ main { overflow-x: clip; }
 .hero::after {
   content: "";
   position: absolute;
-  bottom: -6rem;
+  bottom: 4rem;
   left: -14rem;
   width: 34rem;
   height: 34rem;
@@ -768,52 +768,6 @@ main { overflow-x: clip; }
 }
 .page-hero h1 { max-width: 18ch; }
 .page-hero .lead { max-width: 42rem; margin-top: 1.5rem; }
-
-/* ---------- Bandă cu teme (marquee) ---------- */
-
-.marquee {
-  overflow: hidden;
-  padding-block: 1.35rem;
-  border-block: 1px solid var(--line);
-  background: var(--surface);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-}
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 48s linear infinite;
-}
-.marquee:hover .marquee-track { animation-play-state: paused; }
-.marquee ul {
-  display: flex;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.marquee li {
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
-  padding-right: 2.5rem;
-  font-family: var(--font-serif);
-  font-size: clamp(1.2rem, 1rem + 0.9vw, 1.7rem);
-  font-style: italic;
-  font-weight: 350;
-  color: var(--ink-soft);
-  white-space: nowrap;
-}
-.marquee li::after {
-  content: "";
-  width: 0.45rem;
-  height: 0.45rem;
-  border-radius: 50%;
-  background: var(--clay-500);
-  opacity: 0.7;
-}
-@keyframes marquee {
-  to { transform: translateX(-50%); }
-}
 
 /* ---------- Slider (derulare cu puncte de navigare) ---------- */
 
@@ -2005,7 +1959,6 @@ html:not(.js) .to-top { display: none; }
     transition-delay: 0s !important;
   }
   .js .reveal { opacity: 1; transform: none; }
-  .marquee-track,
   .hero::before,
   .hero::after,
   .scroll-cue::before { animation: none !important; }
@@ -2017,7 +1970,6 @@ html:not(.js) .to-top { display: none; }
   .site-header,
   .side-dots,
   .to-top,
-  .marquee,
   .slider-controls,
   .nav-toggle,
   .cta-band,
