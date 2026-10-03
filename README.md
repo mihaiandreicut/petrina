@@ -54,12 +54,16 @@ Textele de completat sunt marcate pe site cu **fundal galben** (clasa `todo`). D
 
 ### Fotografii
 
-Momentan, în locul fotografiilor apar substituenți („Fotografie profesională”, „Fotografie cabinet 1–3”).
-Pune fotografiile în `assets/img/` și înlocuiește fiecare bloc `<div class="photo-placeholder">…</div>`
-cu eticheta `<img>` sugerată în comentariul HTML de deasupra lui, de exemplu:
+Fotografia din prima secțiune este `assets/img/petrina.jpg` (1000 px lățime), cu o variantă mai mică
+pentru telefon, `assets/img/petrina-640.jpg`. Pentru a o schimba, înlocuiește ambele fișiere,
+păstrând numele.
+
+Fotografiile cabinetului au încă substituenți („Fotografie cabinet 1–3”). Pune fotografiile în
+`assets/img/` și înlocuiește fiecare bloc `<div class="photo-placeholder">…</div>` cu eticheta
+`<img>` sugerată în comentariul HTML de deasupra lui, de exemplu:
 
 ```html
-<img src="assets/img/petrina.jpg" alt="Petrina Andreicuț, psiholog clinician și psihoterapeut" width="800" height="1000">
+<img src="assets/img/cabinet-1.jpg" alt="Cabinetul de psihologie din Sibiu" width="1200" height="1500" loading="lazy">
 ```
 
 Sliderul cu fotografii din secțiunea Cabinet primește automat câte un punct pentru fiecare fotografie.
@@ -102,7 +106,7 @@ Adresa site-ului este `https://mihaiandreicut.github.io/petrina/`. După fiecare
 ## Modificări cu Claude Code
 
 Claude Code poate lucra direct în GitHub: scrie `@claude` și cererea într-un issue nou sau într-un
-comentariu (de exemplu „@claude adaugă fotografia din assets/img/petrina.jpg în prima secțiune”).
+comentariu (de exemplu „@claude adaugă fotografiile din assets/img/cabinet-1.jpg … în secțiunea Cabinet”).
 Claude face modificarea pe o ramură nouă și deschide un pull request; după ce îl unești în `main`,
 modificarea apare pe site. Regulile pe care le urmează sunt în `CLAUDE.md`.
 

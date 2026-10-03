@@ -775,15 +775,19 @@ main { overflow-x: clip; }
   aspect-ratio: auto;
   border-radius: 0;
 }
+.tile--photo .photo img { object-position: 50% 30%; }
 
 .tile--fact {
   grid-column: span 3;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
   min-height: 10.5rem;
   padding: clamp(1.25rem, 1rem + 0.8vw, 1.6rem);
 }
+/* Eticheta stă sus, în dreptul iconiței; valoarea stă jos */
+.tile--fact .tile-label { margin: 0.85rem 4rem 0 0; }
 .tile--fact > .icon {
   position: absolute;
   top: clamp(1rem, 0.75rem + 0.6vw, 1.4rem);
@@ -807,6 +811,8 @@ main { overflow-x: clip; }
   .tile--photo { grid-column: 1 / -1; }
   .hero-bento .tile--fact { grid-column: span 6; min-height: 9.5rem; }
   .tile--fact .tile-value { font-size: 1.05rem; }
+  /* Cardurile sunt înguste pe telefon: eticheta trece sub iconiță */
+  .tile--fact .tile-label { margin: 2.75rem 0 0; }
 }
 
 /* ---------- Antet pagini secundare (confidențialitate, 404) ---------- */
