@@ -513,7 +513,7 @@ main { overflow-x: clip; }
   width: calc(100% - 2 * var(--gutter));
   max-width: calc(1200px - 2 * var(--gutter));
   min-height: calc(var(--header-h) - 0.75rem);
-  padding: 0.45rem 0.45rem 0.45rem 0.6rem;
+  padding: 0.45rem 0.45rem 0.45rem clamp(1.1rem, 0.9rem + 0.6vw, 1.5rem);
   border: 1px solid var(--line);
   border-radius: 999px;
   background: rgb(255 252 247 / 0.8);
@@ -535,19 +535,6 @@ main { overflow-x: clip; }
   text-decoration: none;
 }
 .brand:hover { color: var(--ink); }
-.brand-mark {
-  display: grid;
-  place-items: center;
-  width: 2.6rem;
-  height: 2.6rem;
-  border-radius: 50%;
-  background: var(--sage-800);
-  color: var(--bg);
-  font-family: var(--font-serif);
-  font-size: 1.05rem;
-  font-style: italic;
-  letter-spacing: 0.02em;
-}
 .brand-text { display: grid; line-height: 1.2; }
 .brand-name {
   font-family: var(--font-serif);
@@ -1998,13 +1985,21 @@ a.contact-item:hover .icon { background: var(--sage-800); border-color: var(--sa
   font-weight: 300;
   line-height: 1.12;
   letter-spacing: -0.045em;
-  white-space: nowrap;
   color: var(--sage-500);
   user-select: none;
 }
 /* Pe ecranele mai înguste, butonul „sus” ar acoperi finalul numelui: lăsăm loc sub el */
 @media (max-width: 1339px) {
   .footer-wordmark { padding-bottom: calc(3.1rem + clamp(1rem, 2vw, 1.75rem)); }
+}
+/* Pe telefon numele e mai mic (cam 70% din lățime). Dacă textul e mărit din setări,
+   numele trece pe două rânduri în loc să fie tăiat (la orice lățime) */
+@media (max-width: 640px) {
+  .footer-wordmark {
+    font-size: calc((100vw - 2 * var(--panel-inset) - 2 * var(--gutter)) / 8);
+    font-size: calc(100cqi / 8);
+    line-height: 1.05;
+  }
 }
 
 @media (max-width: 860px) {
