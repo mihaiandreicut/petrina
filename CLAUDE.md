@@ -10,6 +10,8 @@ ramura `main` (rădăcina repository-ului); orice modificare unită în `main` a
   `#resurse`, `#intrebari`, `#contact`). Detaliile serviciilor sunt în elemente `<dialog class="modal">`.
   Fiecare secțiune începe cu un antet `.sec-head`: index numerotat (`.sec-index`, 01–07), titlu și
   un text scurt în dreapta. La o secțiune nouă, renumerotează indexurile de după ea.
+  Conținutul e așezat în carduri rotunjite (`.tile`, cu variantele `--sand`, `--sage`, `--clay`,
+  `--dark`) într-o grilă `.bento` de 12 coloane.
 - `confidentialitate.html`, `404.html`: pagini secundare, cu același antet și subsol.
 - `assets/css/style.css`: tot stilul. Culorile, fonturile și spațierile sunt variabile în `:root`.
 - `assets/js/main.js`: meniu mobil, slidere, ferestre, taburi, secțiunea curentă, formular.
