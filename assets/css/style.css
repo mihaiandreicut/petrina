@@ -781,10 +781,11 @@ main { overflow-x: clip; }
   grid-auto-flow: column;
   grid-auto-columns: calc((100% - (var(--per-view) - 1) * var(--slide-gap)) / var(--per-view));
   gap: var(--slide-gap);
-  /* Banda se întinde până la marginile ecranului, cardurile rămân aliniate cu conținutul */
-  margin: -1rem calc(50% - 50vw) 0;
-  padding: 1rem calc(50vw - 50%) 1.5rem;
-  scroll-padding-inline: calc(50vw - 50%);
+  /* Banda rămâne în lățimea conținutului; marginea mică lasă loc umbrei cardurilor */
+  --slide-bleed: 0.75rem;
+  margin: -1rem calc(-1 * var(--slide-bleed)) 0;
+  padding: 1rem var(--slide-bleed) 1.5rem;
+  scroll-padding-inline: var(--slide-bleed);
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
