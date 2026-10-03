@@ -28,7 +28,7 @@ Elemente interactive:
 - **bară de progres** a derulării sub meniu și buton „înapoi sus”.
 - **ferestre (dialog)** cu detaliile fiecărui serviciu.
 - **taburi** în secțiunea Despre mine.
-- **bandă animată** cu temele de lucru, animații discrete la derulare.
+- **animații discrete** la derulare.
 
 Animațiile se opresc automat pentru cei care au activat „reducerea mișcării” în sistem. Dacă
 JavaScript nu se încarcă, tot conținutul rămâne vizibil: detaliile serviciilor apar sub carduri,
