@@ -90,6 +90,33 @@ de completat. Pentru fiecare articol, completează un `<article class="article-c
 Dacă vrei să ascunzi secțiunea până ai articole, adaugă atributul `hidden` pe
 `<section class="section" id="resurse" …>` și scoate „Resurse” din meniu, subsol și punctele laterale.
 
+## Publicare (GitHub Pages)
+
+Site-ul se publică din ramura `main`, din rădăcina repository-ului (fișierul `.nojekyll` oprește
+procesarea Jekyll, deci fișierele se servesc exact cum sunt). Setarea se face o singură dată:
+**Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main` / `(root)` → Save**.
+
+Adresa site-ului este `https://mihaiandreicut.github.io/petrina/`. După fiecare modificare unită în
+`main`, site-ul se actualizează singur în aproximativ un minut.
+
+## Modificări cu Claude Code
+
+Claude Code poate lucra direct în GitHub: scrie `@claude` și cererea într-un issue nou sau într-un
+comentariu (de exemplu „@claude adaugă fotografia din assets/img/petrina.jpg în prima secțiune”).
+Claude face modificarea pe o ramură nouă și deschide un pull request; după ce îl unești în `main`,
+modificarea apare pe site. Regulile pe care le urmează sunt în `CLAUDE.md`.
+
+Configurare (o singură dată):
+
+1. Aplicația [Claude GitHub](https://github.com/apps/claude) trebuie să fie instalată pe acest repository.
+2. Pe un calculator cu Claude Code instalat, rulează `claude setup-token` și copiază tokenul afișat.
+3. În **Settings → Secrets and variables → Actions → New repository secret**, creează secretul
+   `CLAUDE_CODE_OAUTH_TOKEN` cu tokenul copiat. Rulările folosesc abonamentul Claude.
+
+Doar persoanele cu drept de scriere în repository pot porni Claude. Fluxul de lucru este în
+`.github/workflows/claude.yml`. Poți lucra cu Claude Code și din [claude.ai/code](https://claude.ai/code),
+alegând acest repository.
+
 ## După publicarea pe un domeniu
 
 - Adaugă `<link rel="canonical" href="https://domeniu.ro/">` și `og:url`.
