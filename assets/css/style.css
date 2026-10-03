@@ -1916,6 +1916,8 @@ a.contact-item:hover .icon { background: var(--sage-800); border-color: var(--sa
   color: rgb(238 242 236 / 0.78);
   font-size: 0.97rem;
 }
+/* Lățimea subsolului e referința pentru mărimea numelui mare de la final */
+.site-footer > .container { container-type: inline-size; }
 .site-footer a {
   color: rgb(238 242 236 / 0.9);
   text-decoration: none;
@@ -1988,8 +1990,10 @@ a.contact-item:hover .icon { background: var(--sage-800); border-color: var(--sa
   padding-block: 0.25rem 0.5rem;
   overflow: hidden;
   font-family: var(--font-serif);
-  /* Numele umple lățimea conținutului; „opsz” fix păstrează aceeași lățime a literelor la orice mărime */
-  font-size: calc((min(100vw, 1200px) - 2 * var(--gutter)) / 5.75);
+  /* Numele umple lățimea subsolului (care are margini față de ecran); „opsz” fix păstrează
+     aceeași lățime a literelor la orice mărime, iar împărțirea la 6 lasă puțin spațiu liber */
+  font-size: calc((min(100vw - 2 * var(--panel-inset), 1200px) - 2 * var(--gutter)) / 6);
+  font-size: calc(100cqi / 6);
   font-variation-settings: "opsz" 144;
   font-weight: 300;
   line-height: 1.12;
@@ -1997,6 +2001,10 @@ a.contact-item:hover .icon { background: var(--sage-800); border-color: var(--sa
   white-space: nowrap;
   color: var(--sage-500);
   user-select: none;
+}
+/* Pe ecranele mai înguste, butonul „sus” ar acoperi finalul numelui: lăsăm loc sub el */
+@media (max-width: 1339px) {
+  .footer-wordmark { padding-bottom: calc(3.1rem + clamp(1rem, 2vw, 1.75rem)); }
 }
 
 @media (max-width: 860px) {
