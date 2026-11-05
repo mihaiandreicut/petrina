@@ -651,8 +651,13 @@ main { overflow-x: clip; }
   html:not(.js) .nav-list { flex-wrap: wrap; }
 }
 
+/* Pe telefon textul de sub nume rămâne vizibil, dar mai compact */
 @media (max-width: 420px) {
-  .brand-role { display: none; }
+  .brand-role { font-size: 0.66rem; letter-spacing: 0.06em; }
+}
+@media (max-width: 350px) {
+  .brand-role { font-size: 0.6rem; letter-spacing: 0.03em; }
+  .header-inner { gap: 0.75rem; }
 }
 
 /* ---------- Fotografii (substituenți până la fotografiile reale) ---------- */
