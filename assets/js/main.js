@@ -39,14 +39,10 @@
   var toggle = document.querySelector(".nav-toggle");
   var menu = document.getElementById("meniu");
   var SVG = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">';
-  var MENU_ICONS = {
-    despre: '<circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/>',
-    servicii: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',
-    cabinet: '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>',
-    resurse: '<path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2Z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/>',
-    intrebari: '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/>',
-    contact: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>'
-  };
+  // Ilustrații unDraw (undraw.co), recolorate în culorile site-ului, în assets/img/meniu/
+  var MENU_ART = { despre: 1, servicii: 1, cabinet: 1, resurse: 1, intrebari: 1, contact: 1 };
+  var script = document.currentScript || document.querySelector("script[src*='main.js']");
+  var artBase = new URL("../img/meniu/", script ? script.src : location.href).href;
   var CALENDAR = '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>';
 
   if (toggle && menu) {
@@ -66,7 +62,8 @@
       var key = href.split("#")[1] || "";
       tiles += '<li><a class="menu-tile" href="' + href + '" data-key="' + key + '">' +
         '<span class="menu-tile-label">' + label + "</span>" +
-        '<span class="menu-tile-art">' + SVG + (MENU_ICONS[key] || "") + "</svg></span></a></li>";
+        (MENU_ART[key] ? '<img class="menu-tile-art" src="' + artBase + key + '.svg" alt="" width="160" height="130" loading="lazy" decoding="async">' : "") +
+        "</a></li>";
     });
     menuDialog.innerHTML =
       '<div class="menu-dialog-head">' +

@@ -1427,8 +1427,8 @@ html:not(.js) .modal-close { display: none; }
   display: flex;
   align-items: flex-start;
   height: 100%;
-  min-height: 8rem;
-  padding: 1rem 1.1rem;
+  min-height: 9.5rem;
+  padding: 0.9rem 1rem;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -1448,32 +1448,26 @@ html:not(.js) .modal-close { display: none; }
   font-size: 1.15rem;
   line-height: 1.2;
 }
-/* Desenul de fundal: iconița mare, cu linie subțire, ieșind ușor din card */
+/* Ilustrația de fundal, în colțul din dreapta-jos al cardului */
 .menu-tile-art {
   position: absolute;
-  right: -0.9rem;
-  bottom: -1.1rem;
-  color: var(--sage-700);
-  opacity: 0.22;
-  transform: rotate(-8deg);
-  transition: transform 0.4s var(--ease), opacity 0.4s var(--ease);
+  right: -0.4rem;
+  bottom: -0.2rem;
+  width: 72%;
+  height: 72%;
+  object-fit: contain;
+  object-position: right bottom;
+  opacity: 0.9;
+  transition: transform 0.4s var(--ease);
   pointer-events: none;
 }
-.menu-grid li:nth-child(3n) .menu-tile-art { color: var(--clay-700); }
-.menu-tile-art .icon {
-  width: 6.25rem;
-  height: 6.25rem;
-  stroke-width: 1.1;
-}
-.menu-tile:hover .menu-tile-art,
-.menu-tile[aria-current] .menu-tile-art { opacity: 0.32; transform: rotate(-3deg) scale(1.04); }
+.menu-tile:hover .menu-tile-art { transform: scale(1.04); }
 .menu-cta { width: 100%; justify-content: center; }
 .menu-cta .icon { width: 1.1rem; height: 1.1rem; }
 html:not(.js) .menu-dialog { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .menu-tile-art { transition: none; }
-  .menu-tile:hover .menu-tile-art,
-  .menu-tile[aria-current] .menu-tile-art { transform: rotate(-8deg); }
+  .menu-tile:hover .menu-tile-art { transform: none; }
 }
 
 /* ---------- Despre mine ---------- */
