@@ -94,6 +94,14 @@ de completat. Pentru fiecare articol, completează un `<article class="article-c
 Dacă vrei să ascunzi secțiunea până ai articole, adaugă atributul `hidden` pe
 `<section class="section" id="resurse" …>` și scoate „Resurse” din meniu, subsol și punctele laterale.
 
+## Ilustrațiile din meniu
+
+Pe telefon și tabletă, meniul se deschide într-o fereastră cu câte un card pentru fiecare secțiune.
+Ilustrațiile din carduri sunt în `assets/img/meniu/` (câte un fișier SVG pentru fiecare secțiune, cu
+numele secțiunii: `despre.svg`, `servicii.svg` etc.). Sunt ilustrații [unDraw](https://undraw.co),
+gratuite și pentru uz comercial, fără atribuire obligatorie, recolorate în culorile site-ului.
+Pentru a schimba o ilustrație, înlocuiește fișierul cu același nume.
+
 ## Publicare (GitHub Pages)
 
 Site-ul se publică din ramura `main`, din rădăcina repository-ului (fișierul `.nojekyll` oprește
