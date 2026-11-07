@@ -70,6 +70,7 @@
       });
     };
     var spy = new IntersectionObserver(function (entries) {
+      if (window.sectionDialogOpen) return;
       entries.forEach(function (entry) {
         if (entry.isIntersecting) markCurrent(entry.target.id);
       });
@@ -201,7 +202,7 @@
     }
     // Un link din fereastră (ex. „Programează”) închide fereastra și continuă navigarea.
     var link = e.target.closest("dialog[open] a[href^='#']");
-    if (link) link.closest("dialog").close();
+    if (link && link.closest("dialog").id !== "dlg-sectiune") link.closest("dialog").close();
   });
 
   document.querySelectorAll("dialog.modal").forEach(function (dialog) {
@@ -210,6 +211,84 @@
       if (e.target === dialog) dialog.close();
     });
   });
+
+  /* ---------- Secțiunile din meniu se deschid într-o fereastră ---------- */
+  // Secțiunea este mutată temporar în fereastră (nu copiată), ca sliderele, taburile
+  // și formularul să funcționeze la fel; la închidere revine la locul ei în pagină.
+  var sectionDialog = document.getElementById("dlg-sectiune");
+  var sectionSlot = sectionDialog && sectionDialog.querySelector("[data-section-slot]");
+  if (sectionDialog && sectionSlot && typeof sectionDialog.showModal === "function") {
+    var placeholder = null;
+    var shown = null;
+
+    var restoreSection = function () {
+      if (!shown) return;
+      sectionDialog.querySelectorAll("dialog[open]").forEach(function (d) { d.close(); });
+      placeholder.replaceWith(shown);
+      shown = null;
+      placeholder = null;
+      window.sectionDialogOpen = false;
+    };
+
+    var markMenu = function (id) {
+      navLinks.forEach(function (a) {
+        if (a.getAttribute("href") === "#" + id) a.setAttribute("aria-current", "location");
+        else a.removeAttribute("aria-current");
+      });
+    };
+
+    var showSection = function (section) {
+      if (shown === section) return;
+      restoreSection();
+      placeholder = document.createElement("div");
+      placeholder.style.height = section.offsetHeight + "px";
+      section.replaceWith(placeholder);
+      sectionSlot.appendChild(section);
+      section.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("is-visible"); });
+      shown = section;
+      window.sectionDialogOpen = true;
+      var heading = section.getAttribute("aria-labelledby");
+      if (heading) {
+        sectionDialog.removeAttribute("aria-label");
+        sectionDialog.setAttribute("aria-labelledby", heading);
+      }
+      markMenu(section.id);
+      if (!sectionDialog.open) sectionDialog.showModal();
+      sectionSlot.scrollTop = 0;
+    };
+
+    var findSection = function (href) {
+      if (!href || href.charAt(0) !== "#" || href.length < 2) return null;
+      var el = document.getElementById(href.slice(1));
+      return el && el.matches("main section[id]:not(.hero), #dlg-sectiune section[id]") ? el : null;
+    };
+
+    sectionDialog.addEventListener("close", function () {
+      if (!sectionDialog.open) restoreSection();
+    });
+    sectionDialog.addEventListener("click", function (e) {
+      if (e.target === sectionDialog) sectionDialog.close();
+    });
+
+    document.addEventListener("click", function (e) {
+      if (e.defaultPrevented) return;
+      var link = e.target.closest("a[href^='#']");
+      if (!link) return;
+      var inMenu = link.closest(".nav-list");
+      var inDialog = link.closest("#dlg-sectiune");
+      if (!inMenu && !inDialog) return;
+      var href = link.getAttribute("href");
+      var section = findSection(href);
+      if (section) {
+        e.preventDefault();
+        showSection(section);
+        return;
+      }
+      // Link din fereastră către ceva din afara ei (ex. începutul paginii): închidem fereastra.
+      var target = href.length > 1 && document.getElementById(href.slice(1));
+      if (inDialog && target && !sectionDialog.contains(target)) sectionDialog.close();
+    });
+  }
 
   /* ---------- Taburi (secțiunea Despre mine) ---------- */
   document.querySelectorAll("[data-tabs]").forEach(function (wrap) {

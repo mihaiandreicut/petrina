@@ -1385,10 +1385,27 @@ html:not(.js) .modal {
 }
 html:not(.js) .modal-close { display: none; }
 
+/* Secțiune deschisă din meniu într-o fereastră */
+.modal--section {
+  width: min(1240px, calc(100vw - 2rem));
+  max-height: 92dvh;
+  background: var(--bg);
+}
+.modal--section .modal-body { padding: 0; }
+.modal--section .section { padding-block: clamp(3.5rem, 2.5rem + 3vw, 5rem) clamp(2rem, 1.5rem + 2vw, 3.5rem); }
+.modal-section-close {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  z-index: 2;
+}
+html:not(.js) .modal--section { display: none; }
+
 @media (max-width: 700px) {
   .service-body { grid-template-columns: minmax(0, 1fr); }
   .modal { width: calc(100vw - 1rem); max-height: 92dvh; }
   .modal-head > .icon { display: none; }
+  .modal--section { width: 100vw; max-height: 100dvh; height: 100dvh; border-radius: 0; }
 }
 
 /* ---------- Despre mine ---------- */
