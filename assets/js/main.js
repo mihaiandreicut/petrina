@@ -33,29 +33,72 @@
     }
   }, { passive: true });
 
-  /* ---------- Meniu mobil ---------- */
+  /* ---------- Meniu pe telefon și tabletă: fereastră în mijlocul ecranului ---------- */
+  // Fereastra se construiește din linkurile meniului, deci rămâne la fel pe toate paginile.
+  // Fără JavaScript, meniul obișnuit rămâne vizibil în antet.
   var toggle = document.querySelector(".nav-toggle");
   var menu = document.getElementById("meniu");
+  var SVG = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">';
+  // Ilustrații unDraw (undraw.co), recolorate în culorile site-ului, în assets/img/meniu/
+  var MENU_ART = { despre: 1, servicii: 1, cabinet: 1, resurse: 1, intrebari: 1, contact: 1 };
+  var script = document.currentScript || document.querySelector("script[src*='main.js']");
+  var artBase = new URL("../img/meniu/", script ? script.src : location.href).href;
+  var CALENDAR = '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>';
+
   if (toggle && menu) {
-    var setOpen = function (open) {
-      toggle.setAttribute("aria-expanded", String(open));
-      toggle.setAttribute("aria-label", open ? "Închide meniul" : "Deschide meniul");
-      menu.classList.toggle("is-open", open);
-    };
+    var menuDialog = document.createElement("dialog");
+    menuDialog.className = "modal menu-dialog";
+    menuDialog.id = "dlg-meniu";
+    menuDialog.setAttribute("aria-labelledby", "dlg-meniu-titlu");
+    var tiles = "";
+    var cta = "";
+    menu.querySelectorAll("a").forEach(function (a) {
+      var href = a.getAttribute("href");
+      var label = a.textContent.trim();
+      if (a.classList.contains("btn")) {
+        cta = '<a class="btn menu-cta" href="' + href + '">' + SVG + CALENDAR + "</svg>" + label + "</a>";
+        return;
+      }
+      var key = href.split("#")[1] || "";
+      tiles += '<li><a class="menu-tile" href="' + href + '" data-key="' + key + '">' +
+        '<span class="menu-tile-label">' + label + "</span>" +
+        (MENU_ART[key] ? '<img class="menu-tile-art" src="' + artBase + key + '.svg" alt="" width="160" height="130" loading="lazy" decoding="async">' : "") +
+        "</a></li>";
+    });
+    menuDialog.innerHTML =
+      '<div class="menu-dialog-head">' +
+      '<p class="menu-dialog-title" id="dlg-meniu-titlu">Meniu</p>' +
+      '<form method="dialog"><button class="modal-close" type="submit" aria-label="Închide meniul">' +
+      SVG + '<path d="M18 6 6 18M6 6l12 12"/></svg></button></form>' +
+      "</div>" +
+      '<ul class="menu-grid">' + tiles + "</ul>" + cta;
+    document.body.appendChild(menuDialog);
+
+    toggle.setAttribute("aria-controls", "dlg-meniu");
+    toggle.setAttribute("aria-haspopup", "dialog");
+
     toggle.addEventListener("click", function () {
-      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+      if (typeof menuDialog.showModal !== "function") {
+        menu.classList.toggle("is-open");
+        return;
+      }
+      // Secțiunea curentă apare marcată și în fereastră.
+      menuDialog.querySelectorAll(".menu-tile").forEach(function (tile) {
+        var original = menu.querySelector("a[href='" + tile.getAttribute("href") + "']");
+        if (original && original.hasAttribute("aria-current")) tile.setAttribute("aria-current", "location");
+        else tile.removeAttribute("aria-current");
+      });
+      menuDialog.showModal();
+      toggle.setAttribute("aria-expanded", "true");
+    });
+    menuDialog.addEventListener("close", function () {
+      toggle.setAttribute("aria-expanded", "false");
+    });
+    menuDialog.addEventListener("click", function (e) {
+      if (e.target === menuDialog || e.target.closest("a")) menuDialog.close();
     });
     menu.addEventListener("click", function (e) {
-      if (e.target.closest("a")) setOpen(false);
-    });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
-        setOpen(false);
-        toggle.focus();
-      }
-    });
-    document.addEventListener("click", function (e) {
-      if (!e.target.closest(".site-nav")) setOpen(false);
+      if (e.target.closest("a")) menu.classList.remove("is-open");
     });
   }
 
@@ -70,7 +113,6 @@
       });
     };
     var spy = new IntersectionObserver(function (entries) {
-      if (window.sectionDialogOpen) return;
       entries.forEach(function (entry) {
         if (entry.isIntersecting) markCurrent(entry.target.id);
       });
@@ -202,7 +244,7 @@
     }
     // Un link din fereastră (ex. „Programează”) închide fereastra și continuă navigarea.
     var link = e.target.closest("dialog[open] a[href^='#']");
-    if (link && link.closest("dialog").id !== "dlg-sectiune") link.closest("dialog").close();
+    if (link) link.closest("dialog").close();
   });
 
   document.querySelectorAll("dialog.modal").forEach(function (dialog) {
@@ -211,84 +253,6 @@
       if (e.target === dialog) dialog.close();
     });
   });
-
-  /* ---------- Secțiunile din meniu se deschid într-o fereastră ---------- */
-  // Secțiunea este mutată temporar în fereastră (nu copiată), ca sliderele, taburile
-  // și formularul să funcționeze la fel; la închidere revine la locul ei în pagină.
-  var sectionDialog = document.getElementById("dlg-sectiune");
-  var sectionSlot = sectionDialog && sectionDialog.querySelector("[data-section-slot]");
-  if (sectionDialog && sectionSlot && typeof sectionDialog.showModal === "function") {
-    var placeholder = null;
-    var shown = null;
-
-    var restoreSection = function () {
-      if (!shown) return;
-      sectionDialog.querySelectorAll("dialog[open]").forEach(function (d) { d.close(); });
-      placeholder.replaceWith(shown);
-      shown = null;
-      placeholder = null;
-      window.sectionDialogOpen = false;
-    };
-
-    var markMenu = function (id) {
-      navLinks.forEach(function (a) {
-        if (a.getAttribute("href") === "#" + id) a.setAttribute("aria-current", "location");
-        else a.removeAttribute("aria-current");
-      });
-    };
-
-    var showSection = function (section) {
-      if (shown === section) return;
-      restoreSection();
-      placeholder = document.createElement("div");
-      placeholder.style.height = section.offsetHeight + "px";
-      section.replaceWith(placeholder);
-      sectionSlot.appendChild(section);
-      section.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("is-visible"); });
-      shown = section;
-      window.sectionDialogOpen = true;
-      var heading = section.getAttribute("aria-labelledby");
-      if (heading) {
-        sectionDialog.removeAttribute("aria-label");
-        sectionDialog.setAttribute("aria-labelledby", heading);
-      }
-      markMenu(section.id);
-      if (!sectionDialog.open) sectionDialog.showModal();
-      sectionSlot.scrollTop = 0;
-    };
-
-    var findSection = function (href) {
-      if (!href || href.charAt(0) !== "#" || href.length < 2) return null;
-      var el = document.getElementById(href.slice(1));
-      return el && el.matches("main section[id]:not(.hero), #dlg-sectiune section[id]") ? el : null;
-    };
-
-    sectionDialog.addEventListener("close", function () {
-      if (!sectionDialog.open) restoreSection();
-    });
-    sectionDialog.addEventListener("click", function (e) {
-      if (e.target === sectionDialog) sectionDialog.close();
-    });
-
-    document.addEventListener("click", function (e) {
-      if (e.defaultPrevented) return;
-      var link = e.target.closest("a[href^='#']");
-      if (!link) return;
-      var inMenu = link.closest(".nav-list");
-      var inDialog = link.closest("#dlg-sectiune");
-      if (!inMenu && !inDialog) return;
-      var href = link.getAttribute("href");
-      var section = findSection(href);
-      if (section) {
-        e.preventDefault();
-        showSection(section);
-        return;
-      }
-      // Link din fereastră către ceva din afara ei (ex. începutul paginii): închidem fereastra.
-      var target = href.length > 1 && document.getElementById(href.slice(1));
-      if (inDialog && target && !sectionDialog.contains(target)) sectionDialog.close();
-    });
-  }
 
   /* ---------- Taburi (secțiunea Despre mine) ---------- */
   document.querySelectorAll("[data-tabs]").forEach(function (wrap) {

@@ -1385,27 +1385,89 @@ html:not(.js) .modal {
 }
 html:not(.js) .modal-close { display: none; }
 
-/* Secțiune deschisă din meniu într-o fereastră */
-.modal--section {
-  width: min(1240px, calc(100vw - 2rem));
-  max-height: 92dvh;
-  background: var(--bg);
-}
-.modal--section .modal-body { padding: 0; }
-.modal--section .section { padding-block: clamp(3.5rem, 2.5rem + 3vw, 5rem) clamp(2rem, 1.5rem + 2vw, 3.5rem); }
-.modal-section-close {
-  position: absolute;
-  top: 0.9rem;
-  right: 0.9rem;
-  z-index: 2;
-}
-html:not(.js) .modal--section { display: none; }
-
 @media (max-width: 700px) {
   .service-body { grid-template-columns: minmax(0, 1fr); }
   .modal { width: calc(100vw - 1rem); max-height: 92dvh; }
   .modal-head > .icon { display: none; }
-  .modal--section { width: 100vw; max-height: 100dvh; height: 100dvh; border-radius: 0; }
+}
+
+/* ---------- Meniu în fereastră (telefon și tabletă) ---------- */
+
+.modal.menu-dialog {
+  width: min(440px, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  padding: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  overflow-y: auto;
+}
+.menu-dialog[open] { gap: 1rem; }
+.menu-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.menu-dialog-title {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.menu-tile {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  height: 100%;
+  min-height: 9.5rem;
+  padding: 0.9rem 1rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 0.25s var(--ease);
+}
+.menu-grid li:nth-child(3n + 2) .menu-tile { background: var(--sage-100); }
+.menu-grid li:nth-child(3n) .menu-tile { background: var(--clay-100); }
+.menu-tile:hover { border-color: var(--line-strong); }
+.menu-tile[aria-current] { border-color: var(--sage-700); }
+.menu-tile-label {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  line-height: 1.2;
+}
+/* Ilustrația de fundal, în colțul din dreapta-jos al cardului */
+.menu-tile-art {
+  position: absolute;
+  right: -0.4rem;
+  bottom: -0.2rem;
+  width: 72%;
+  height: 72%;
+  object-fit: contain;
+  object-position: right bottom;
+  opacity: 0.9;
+  transition: transform 0.4s var(--ease);
+  pointer-events: none;
+}
+.menu-tile:hover .menu-tile-art { transform: scale(1.04); }
+.menu-cta { width: 100%; justify-content: center; }
+.menu-cta .icon { width: 1.1rem; height: 1.1rem; }
+html:not(.js) .menu-dialog { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .menu-tile-art { transition: none; }
+  .menu-tile:hover .menu-tile-art { transform: none; }
 }
 
 /* ---------- Despre mine ---------- */
