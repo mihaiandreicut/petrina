@@ -131,10 +131,23 @@ alegând acest repository.
 
 ## După publicarea pe un domeniu
 
-- Adaugă `<link rel="canonical" href="https://domeniu.ro/">` și `og:url`.
-- Adaugă o imagine pentru distribuirea pe rețele sociale (`og:image`, 1200×630 px).
-- Creează un `sitemap.xml` și trimite-l în Google Search Console.
+Adresa actuală a site-ului, `https://mihaiandreicut.github.io/petrina/`, apare în: `<link rel="canonical">`,
+`og:url` și `og:image` din `index.html` și `confidentialitate.html`, datele structurate (JSON-LD) din
+`index.html`, `sitemap.xml`, `robots.txt` și `llms.txt`. La mutarea pe un domeniu propriu, înlocuiește-o
+peste tot cu noua adresă.
+
+- Trimite `sitemap.xml` în Google Search Console.
 - Creează un profil Google Business pentru cabinet, cu aceeași adresă și același telefon.
+- `robots.txt` și `llms.txt` sunt citite doar din rădăcina domeniului, deci au efect abia pe un domeniu propriu.
+
+## Ce citesc motoarele de căutare și asistenții AI
+
+- **Date structurate** (schema.org, în `index.html`): cabinetul (`MedicalBusiness`) cu serviciile și
+  tarifele, site-ul și întrebările frecvente (`FAQPage`). La orice schimbare de tarif sau de întrebări,
+  actualizează-le și aici.
+- **`llms.txt`**: rezumat pentru asistenții AI (servicii, tarife, contact). Se actualizează odată cu site-ul.
+- **Imaginea pentru distribuire** (`assets/img/og-image.jpg`, 1200×630) apare când linkul e trimis pe
+  WhatsApp, Facebook etc.
 
 ## Detalii tehnice
 
@@ -147,4 +160,4 @@ alegând acest repository.
   `assets/LICENSE-icons.txt`).
 - **Accesibilitate:** HTML semantic, link „Sari la conținut”, navigare completă din tastatură
   (inclusiv slidere, taburi cu săgeți și ferestre închise cu Esc), contrast WCAG AA.
-- **SEO:** titlu și descriere, plus date structurate schema.org (`MedicalBusiness`).
+- **SEO:** titlu, descriere, adresă canonică, Open Graph, `sitemap.xml`, date structurate schema.org și `llms.txt`.

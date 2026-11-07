@@ -1919,7 +1919,8 @@ a.contact-item:hover .icon { background: var(--sage-800); border-color: var(--sa
 .field textarea:hover { border-color: var(--ink-mute); }
 .field input:focus,
 .field textarea:focus {
-  outline: none;
+  outline: 2px solid var(--sage-700);
+  outline-offset: 1px;
   border-color: var(--sage-700);
   background: #fff;
   box-shadow: 0 0 0 4px rgb(61 90 74 / 0.14);
