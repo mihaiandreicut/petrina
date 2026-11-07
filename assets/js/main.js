@@ -65,8 +65,8 @@
       }
       var key = href.split("#")[1] || "";
       tiles += '<li><a class="menu-tile" href="' + href + '" data-key="' + key + '">' +
-        '<span class="menu-tile-icon">' + SVG + (MENU_ICONS[key] || "") + "</svg></span>" +
-        '<span class="menu-tile-label">' + label + "</span></a></li>";
+        '<span class="menu-tile-label">' + label + "</span>" +
+        '<span class="menu-tile-art">' + SVG + (MENU_ICONS[key] || "") + "</svg></span></a></li>";
     });
     menuDialog.innerHTML =
       '<div class="menu-dialog-head">' +
